@@ -89,6 +89,10 @@ if [ -z "$VERBOSE" ]; then
 	VERBOSE=false
 fi
 
+if [ -z "$SHELL_TO_USE" ]; then
+	SHELL_TO_USE=sh
+fi
+
 if [ -z "$MODE" ]; then
 	MODE=push
 else
@@ -272,9 +276,9 @@ run_script() {
 	fi
 	log "========== $name sent =========="
 	if [ "$REAL_RUN_SCRIPT_ON" == "remote" ]; then
-		eval "$cmd_ssh" "$USER@$HOST" "sh $dest"
+		eval "$cmd_ssh" "$USER@$HOST" "$SHELL_TO_USE $dest"
 	else
-		sh "$dest"
+		eval "$SHELL_TO_USE $dest"
 	fi
 	log "========== $name executed =========="
 	if [ "$REAL_RUN_SCRIPT_ON" == "remote" ]; then
